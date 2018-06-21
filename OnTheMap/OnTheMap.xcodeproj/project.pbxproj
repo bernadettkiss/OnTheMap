@@ -16,6 +16,8 @@
 		CF1AEFB120D0196B00B0EB8C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF1AEFAF20D0196B00B0EB8C /* Main.storyboard */; };
 		CF1AEFB320D0196C00B0EB8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF1AEFB220D0196C00B0EB8C /* Assets.xcassets */; };
 		CF1AEFB620D0196C00B0EB8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF1AEFB420D0196C00B0EB8C /* LaunchScreen.storyboard */; };
+		CF3AD71B20DC0B60004F6340 /* StudentInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3AD71A20DC0B60004F6340 /* StudentInformationViewController.swift */; };
+		CF3AD71D20DC0E5A004F6340 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3AD71C20DC0E5A004F6340 /* Constants.swift */; };
 		CF4ACB3320D2D19200038A3B /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4ACB3220D2D19200038A3B /* ParseClient.swift */; };
 		CF64245E20D4674A0084D3F8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF64245D20D4674A0084D3F8 /* TabBarController.swift */; };
 /* End PBXBuildFile section */
@@ -32,6 +34,8 @@
 		CF1AEFB220D0196C00B0EB8C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF1AEFB520D0196C00B0EB8C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF1AEFB720D0196C00B0EB8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF3AD71A20DC0B60004F6340 /* StudentInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformationViewController.swift; sourceTree = "<group>"; };
+		CF3AD71C20DC0E5A004F6340 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CF4ACB3220D2D19200038A3B /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		CF64245D20D4674A0084D3F8 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,6 +56,7 @@
 			children = (
 				CF1AEFAD20D0196B00B0EB8C /* LoginViewController.swift */,
 				CF64245D20D4674A0084D3F8 /* TabBarController.swift */,
+				CF3AD71A20DC0B60004F6340 /* StudentInformationViewController.swift */,
 				CF07796820D037CA005409E9 /* MapViewController.swift */,
 				CF07796A20D03973005409E9 /* ListViewController.swift */,
 			);
@@ -78,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				CF1AEFAB20D0196B00B0EB8C /* AppDelegate.swift */,
+				CF3AD71C20DC0E5A004F6340 /* Constants.swift */,
 				CFCB69BB20D05E39008EEE4B /* Model */,
 				CF8D3DF720D05DE500AE425B /* View */,
 				CF07797720D05D97005409E9 /* Controller */,
@@ -182,6 +188,8 @@
 				CF07797620D05D72005409E9 /* StudentInformation.swift in Sources */,
 				CF1AEFAE20D0196B00B0EB8C /* LoginViewController.swift in Sources */,
 				CF07797420D05D5F005409E9 /* ParseClientConstants.swift in Sources */,
+				CF3AD71D20DC0E5A004F6340 /* Constants.swift in Sources */,
+				CF3AD71B20DC0B60004F6340 /* StudentInformationViewController.swift in Sources */,
 				CF1AEFAC20D0196B00B0EB8C /* AppDelegate.swift in Sources */,
 				CF07796B20D03973005409E9 /* ListViewController.swift in Sources */,
 				CF07796920D037CA005409E9 /* MapViewController.swift in Sources */,

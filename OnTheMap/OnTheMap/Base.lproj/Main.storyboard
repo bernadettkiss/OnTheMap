@@ -226,9 +226,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
+                        <segue destination="FbE-Qt-feh" kind="unwind" identifier="unwindToLoginScreen" unwindAction="unwindToLoginScreenWithSegue:" id="bAg-Av-DKn"/>
                         <segue destination="8dE-rc-S9F" kind="relationship" relationship="viewControllers" id="TWM-sR-E5b"/>
                         <segue destination="zxq-Mc-3YW" kind="relationship" relationship="viewControllers" id="7p3-72-7V1"/>
-                        <segue destination="FbE-Qt-feh" kind="unwind" identifier="unwindToLoginScreen" unwindAction="unwindToLoginScreenWithSegue:" id="bAg-Av-DKn"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rmn-dx-6LJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

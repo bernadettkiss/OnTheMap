@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: StudentInformationViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -22,6 +22,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    override func refresh() {
+        super.refresh()
+        mapView.removeAnnotations(annotations)
         createAnnotationFor(studentInformationArray: ParseClient.shared.studentInformationArray)
     }
     

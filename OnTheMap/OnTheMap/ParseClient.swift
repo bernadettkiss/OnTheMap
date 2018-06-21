@@ -16,6 +16,8 @@ class ParseClient {
     var studentInformationArray = [StudentInformation]()
     
     func getStudentLocations(_ completionHandlerForStudentLocations: @escaping (_ result: [StudentInformation]?, _ error: NSError?) -> Void) {
+        NotificationCenter.default.post(name: StudentLocations.willLoad.notification, object: nil)
+        
         let parameters = [ParseClient.ParameterKeys.Limit: ParseClient.ParameterValues.Limit,
                           ParseClient.ParameterKeys.Order: ParseClient.ParameterKeys.Order]
         
@@ -25,6 +27,7 @@ class ParseClient {
             } else {
                 if let results = results?[ParseClient.JSONResponseKeys.Results] as? [[String: AnyObject]] {
                     self.studentInformationArray = StudentInformation.studentInformationArrayFrom(results: results)
+                    NotificationCenter.default.post(name: StudentLocations.didLoad.notification, object: nil)
                     completionHandlerForStudentLocations(self.studentInformationArray, nil)
                 } else {
                     completionHandlerForStudentLocations(nil, NSError(domain: "getStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocations"]))
