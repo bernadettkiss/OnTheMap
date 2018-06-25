@@ -27,22 +27,21 @@ class MapViewController: StudentInformationViewController, MKMapViewDelegate {
     override func refresh() {
         super.refresh()
         mapView.removeAnnotations(annotations)
+        annotations.removeAll()
         createAnnotationFor(studentInformationArray: ParseClient.shared.studentInformationArray)
     }
     
     func createAnnotationFor(studentInformationArray: [StudentInformation]) {
         for studentInformation in studentInformationArray {
-            if let lat = studentInformation.latitude {
-                if let lon = studentInformation.longitude {
-                    let latitude = CLLocationDegrees(lat)
-                    let longitude = CLLocationDegrees(lon)
-                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    annotation.title = "\(studentInformation.firstName ?? "First name") \(studentInformation.lastName ?? "Last name")"
-                    annotation.subtitle = studentInformation.mediaURL ?? "No URL"
-                    annotations.append(annotation)
-                }
+            if let lat = studentInformation.latitude, let lon = studentInformation.longitude {
+                let latitude = CLLocationDegrees(lat)
+                let longitude = CLLocationDegrees(lon)
+                let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                annotation.title = "\(studentInformation.firstName ?? "First name") \(studentInformation.lastName ?? "Last name")"
+                annotation.subtitle = studentInformation.mediaURL ?? "No URL"
+                annotations.append(annotation)
             }
         }
         mapView.addAnnotations(self.annotations)

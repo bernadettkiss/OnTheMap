@@ -36,6 +36,23 @@ class ParseClient {
         }
     }
     
+    func postStudentLocation(_ completionHandlerForStudentLocation:  @escaping (_ result: String?, _ error: NSError?) -> Void) {
+        let parameters = [String: String]()
+        let jsonBody = "{\"\(ParseClient.JSONBodyKeys.UniqueKey)\": \"\(UserDataService.shared.uniqueKey)\", \"\(ParseClient.JSONBodyKeys.FirstName)\": \"\(UserDataService.shared.firstName)\", \"\(ParseClient.JSONBodyKeys.LastName)\": \"\(UserDataService.shared.lastName)\",\"\(ParseClient.JSONBodyKeys.MapString)\": \"\(UserDataService.shared.mapString)\", \"\(ParseClient.JSONBodyKeys.MediaURL)\": \"\(UserDataService.shared.mediaURL)\",\"\(ParseClient.JSONBodyKeys.Latitude)\": \(UserDataService.shared.latitude), \"\(ParseClient.JSONBodyKeys.Longitude)\": \(UserDataService.shared.longitude)}"
+        
+        let _ = taskForPOST(method: ParseClient.Methods.StudentLocation, parameters: parameters as [String: AnyObject], jsonBody: jsonBody) { (results, error) in
+            if let error = error {
+                completionHandlerForStudentLocation(nil, error)
+            } else {
+                if let results = results?[ParseClient.JSONResponseKeys.CreatedAt] as? String {
+                    completionHandlerForStudentLocation(results, nil)
+                } else {
+                    completionHandlerForStudentLocation(nil, NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postStudentLocation"]))
+                }
+            }
+        }
+    }
+    
     func taskForGET(method: String, parameters: [String: AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
         
         var request = URLRequest(url: buildURL(fromParameters: parameters as [String: AnyObject], withPathExtension: method))
@@ -64,6 +81,37 @@ class ParseClient {
                 return
             }
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
+        }
+        task.resume()
+        return task
+    }
+    
+    func taskForPOST(method: String, parameters: [String: AnyObject], jsonBody: String, completionHandlerForPOST: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+        
+        var request = URLRequest(url: buildURL(fromParameters: parameters as [String: AnyObject], withPathExtension: method))
+        request.httpMethod = "POST"
+        request.addValue(ParseClient.ParameterValues.ParseAppId, forHTTPHeaderField: ParseClient.ParameterKeys.ParseAppId)
+        request.addValue(ParseClient.ParameterValues.RestApiKey, forHTTPHeaderField: ParseClient.ParameterKeys.RestApiKey)
+        request.addValue(ParseClient.ParameterValues.ContentType, forHTTPHeaderField: ParseClient.ParameterKeys.ContentType)
+        request.httpBody = jsonBody.data(using: .utf8)
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            
+            func sendError(_ error: String) {
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForPOST(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error!)")
+                return
+            }
+            
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
         }
         task.resume()
         return task

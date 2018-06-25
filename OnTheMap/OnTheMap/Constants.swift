@@ -16,3 +16,9 @@ enum StudentLocations: String {
         return Notification.Name(rawValue: self.rawValue)
     }
 }
+
+enum SegueIdentifier: String {
+    case unwindToLogin = "unwindToLogin"
+    case toInformationPosting = "toInformationPosting"
+    case toLocationConfirmation = "toLocationConfirmation"
+}

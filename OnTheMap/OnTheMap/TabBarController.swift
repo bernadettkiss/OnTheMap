@@ -24,6 +24,7 @@ class TabBarController: UITabBarController {
     }
     
     private func getStudentInformationArray() {
+        ParseClient.shared.clearStudentInformationArray()
         ParseClient.shared.getStudentLocations() { (studentInformationArray, error) in
             if let studentInformationArray = studentInformationArray {
                 ParseClient.shared.studentInformationArray = studentInformationArray
@@ -34,10 +35,11 @@ class TabBarController: UITabBarController {
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: SegueIdentifier.toInformationPosting.rawValue, sender: nil)
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIBarButtonItem) {
         ParseClient.shared.clearStudentInformationArray()
-        performSegue(withIdentifier: "unwindToLoginScreen", sender: self)
+        performSegue(withIdentifier: SegueIdentifier.unwindToLogin.rawValue, sender: self)
     }
 }

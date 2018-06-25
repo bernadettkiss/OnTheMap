@@ -18,8 +18,11 @@
 		CF1AEFB620D0196C00B0EB8C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF1AEFB420D0196C00B0EB8C /* LaunchScreen.storyboard */; };
 		CF3AD71B20DC0B60004F6340 /* StudentInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3AD71A20DC0B60004F6340 /* StudentInformationViewController.swift */; };
 		CF3AD71D20DC0E5A004F6340 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3AD71C20DC0E5A004F6340 /* Constants.swift */; };
+		CF3AD71F20DC4092004F6340 /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF3AD71E20DC4092004F6340 /* InformationPostingViewController.swift */; };
 		CF4ACB3320D2D19200038A3B /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4ACB3220D2D19200038A3B /* ParseClient.swift */; };
+		CF4F4DC820DD85F400995FF9 /* LocationConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F4DC720DD85F400995FF9 /* LocationConfirmationViewController.swift */; };
 		CF64245E20D4674A0084D3F8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF64245D20D4674A0084D3F8 /* TabBarController.swift */; };
+		CF6CF0B420E1576400CFF43D /* UserDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B320E1576400CFF43D /* UserDataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +39,11 @@
 		CF1AEFB720D0196C00B0EB8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF3AD71A20DC0B60004F6340 /* StudentInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentInformationViewController.swift; sourceTree = "<group>"; };
 		CF3AD71C20DC0E5A004F6340 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CF3AD71E20DC4092004F6340 /* InformationPostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
 		CF4ACB3220D2D19200038A3B /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
+		CF4F4DC720DD85F400995FF9 /* LocationConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationConfirmationViewController.swift; sourceTree = "<group>"; };
 		CF64245D20D4674A0084D3F8 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		CF6CF0B320E1576400CFF43D /* UserDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,8 @@
 				CF3AD71A20DC0B60004F6340 /* StudentInformationViewController.swift */,
 				CF07796820D037CA005409E9 /* MapViewController.swift */,
 				CF07796A20D03973005409E9 /* ListViewController.swift */,
+				CF3AD71E20DC4092004F6340 /* InformationPostingViewController.swift */,
+				CF4F4DC720DD85F400995FF9 /* LocationConfirmationViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -105,6 +113,7 @@
 		CFCB69BB20D05E39008EEE4B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CF6CF0B320E1576400CFF43D /* UserDataService.swift */,
 				CF4ACB3220D2D19200038A3B /* ParseClient.swift */,
 				CF07797320D05D5F005409E9 /* ParseClientConstants.swift */,
 				CF07797520D05D72005409E9 /* StudentInformation.swift */,
@@ -183,6 +192,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF4F4DC820DD85F400995FF9 /* LocationConfirmationViewController.swift in Sources */,
+				CF6CF0B420E1576400CFF43D /* UserDataService.swift in Sources */,
 				CF64245E20D4674A0084D3F8 /* TabBarController.swift in Sources */,
 				CF4ACB3320D2D19200038A3B /* ParseClient.swift in Sources */,
 				CF07797620D05D72005409E9 /* StudentInformation.swift in Sources */,
@@ -192,6 +203,7 @@
 				CF3AD71B20DC0B60004F6340 /* StudentInformationViewController.swift in Sources */,
 				CF1AEFAC20D0196B00B0EB8C /* AppDelegate.swift in Sources */,
 				CF07796B20D03973005409E9 /* ListViewController.swift in Sources */,
+				CF3AD71F20DC4092004F6340 /* InformationPostingViewController.swift in Sources */,
 				CF07796920D037CA005409E9 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
