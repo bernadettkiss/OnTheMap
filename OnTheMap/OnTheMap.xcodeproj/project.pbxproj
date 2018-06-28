@@ -26,6 +26,7 @@
 		CF6CF0B620E2B54200CFF43D /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B520E2B54200CFF43D /* UdacityClient.swift */; };
 		CF6CF0B820E2B5D200CFF43D /* UdacityClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B720E2B5D200CFF43D /* UdacityClientConstants.swift */; };
 		CF6CF0BC20E3D7D200CFF43D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */; };
+		CFE4978F20E599A00041F048 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE4978E20E599A00041F048 /* GradientButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		CF6CF0B520E2B54200CFF43D /* UdacityClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		CF6CF0B720E2B5D200CFF43D /* UdacityClientConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClientConstants.swift; sourceTree = "<group>"; };
 		CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		CFE4978E20E599A00041F048 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +115,7 @@
 		CF8D3DF720D05DE500AE425B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CFE4978E20E599A00041F048 /* GradientButton.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 				CF3AD71B20DC0B60004F6340 /* StudentInformationViewController.swift in Sources */,
 				CF6CF0BC20E3D7D200CFF43D /* NetworkManager.swift in Sources */,
 				CF1AEFAC20D0196B00B0EB8C /* AppDelegate.swift in Sources */,
+				CFE4978F20E599A00041F048 /* GradientButton.swift in Sources */,
 				CF07796B20D03973005409E9 /* ListViewController.swift in Sources */,
 				CF6CF0B820E2B5D200CFF43D /* UdacityClientConstants.swift in Sources */,
 				CF3AD71F20DC4092004F6340 /* InformationPostingViewController.swift in Sources */,
