@@ -13,7 +13,7 @@ class UserDataService {
     static let shared = UserDataService()
     
     public private(set) var uniqueKey = "1234"
-    public private(set) var firstName = "Theodor"
+    public private(set) var firstName = "Jane"
     public private(set) var lastName = "Doe"
     public private(set) var mapString = ""
     public private(set) var mediaURL = ""
@@ -27,4 +27,3 @@ class UserDataService {
         self.longitude = longitude
     }
 }
-

@@ -18,6 +18,7 @@ class MapViewController: StudentInformationViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
+        createAnnotationFor(studentInformationArray: ParseClient.shared.studentInformationArray)
     }
     
     override func viewWillAppear(_ animated: Bool) {

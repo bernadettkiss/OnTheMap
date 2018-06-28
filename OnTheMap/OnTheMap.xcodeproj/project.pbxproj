@@ -23,6 +23,9 @@
 		CF4F4DC820DD85F400995FF9 /* LocationConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F4DC720DD85F400995FF9 /* LocationConfirmationViewController.swift */; };
 		CF64245E20D4674A0084D3F8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF64245D20D4674A0084D3F8 /* TabBarController.swift */; };
 		CF6CF0B420E1576400CFF43D /* UserDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B320E1576400CFF43D /* UserDataService.swift */; };
+		CF6CF0B620E2B54200CFF43D /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B520E2B54200CFF43D /* UdacityClient.swift */; };
+		CF6CF0B820E2B5D200CFF43D /* UdacityClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B720E2B5D200CFF43D /* UdacityClientConstants.swift */; };
+		CF6CF0BC20E3D7D200CFF43D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +47,9 @@
 		CF4F4DC720DD85F400995FF9 /* LocationConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationConfirmationViewController.swift; sourceTree = "<group>"; };
 		CF64245D20D4674A0084D3F8 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		CF6CF0B320E1576400CFF43D /* UserDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataService.swift; sourceTree = "<group>"; };
+		CF6CF0B520E2B54200CFF43D /* UdacityClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		CF6CF0B720E2B5D200CFF43D /* UdacityClientConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClientConstants.swift; sourceTree = "<group>"; };
+		CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +98,7 @@
 			children = (
 				CF1AEFAB20D0196B00B0EB8C /* AppDelegate.swift */,
 				CF3AD71C20DC0E5A004F6340 /* Constants.swift */,
+				CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */,
 				CFCB69BB20D05E39008EEE4B /* Model */,
 				CF8D3DF720D05DE500AE425B /* View */,
 				CF07797720D05D97005409E9 /* Controller */,
@@ -114,6 +121,8 @@
 			isa = PBXGroup;
 			children = (
 				CF6CF0B320E1576400CFF43D /* UserDataService.swift */,
+				CF6CF0B520E2B54200CFF43D /* UdacityClient.swift */,
+				CF6CF0B720E2B5D200CFF43D /* UdacityClientConstants.swift */,
 				CF4ACB3220D2D19200038A3B /* ParseClient.swift */,
 				CF07797320D05D5F005409E9 /* ParseClientConstants.swift */,
 				CF07797520D05D72005409E9 /* StudentInformation.swift */,
@@ -201,9 +210,12 @@
 				CF07797420D05D5F005409E9 /* ParseClientConstants.swift in Sources */,
 				CF3AD71D20DC0E5A004F6340 /* Constants.swift in Sources */,
 				CF3AD71B20DC0B60004F6340 /* StudentInformationViewController.swift in Sources */,
+				CF6CF0BC20E3D7D200CFF43D /* NetworkManager.swift in Sources */,
 				CF1AEFAC20D0196B00B0EB8C /* AppDelegate.swift in Sources */,
 				CF07796B20D03973005409E9 /* ListViewController.swift in Sources */,
+				CF6CF0B820E2B5D200CFF43D /* UdacityClientConstants.swift in Sources */,
 				CF3AD71F20DC4092004F6340 /* InformationPostingViewController.swift in Sources */,
+				CF6CF0B620E2B54200CFF43D /* UdacityClient.swift in Sources */,
 				CF07796920D037CA005409E9 /* MapViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

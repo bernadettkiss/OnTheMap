@@ -8,9 +8,12 @@
 
 import Foundation
 
+let udacitySignUpURL = "https://auth.udacity.com/sign-up"
+
 enum StudentLocations: String {
     case willLoad = "StudentLocationsWillLoad"
     case didLoad = "StudentLocationsDidLoad"
+    case couldNotLoad = "StudentLocationsCouldNotLoad"
     
     var notification: Notification.Name {
         return Notification.Name(rawValue: self.rawValue)
@@ -19,6 +22,7 @@ enum StudentLocations: String {
 
 enum SegueIdentifier: String {
     case unwindToLogin = "unwindToLogin"
+    case toStudentInformation = "toStudentInformation"
     case toInformationPosting = "toInformationPosting"
     case toLocationConfirmation = "toLocationConfirmation"
 }

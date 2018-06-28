@@ -16,6 +16,7 @@ class StudentInformationViewController: UIViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(studentInformationWillLoad(_:)), name: StudentLocations.willLoad.notification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(studentInformationDidLoad(_:)), name: StudentLocations.didLoad.notification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(studentInformationCouldNotLoad(_:)), name: StudentLocations.couldNotLoad.notification, object: nil)
     }
     
     @objc func studentInformationWillLoad(_ notification: Notification) {
@@ -25,6 +26,12 @@ class StudentInformationViewController: UIViewController {
     @objc func studentInformationDidLoad(_ notification: Notification) {
         DispatchQueue.main.async {
             self.refresh()
+            self.removeSpinner()
+        }
+    }
+    
+    @objc func studentInformationCouldNotLoad(_ notification: Notification) {
+        DispatchQueue.main.async {
             self.removeSpinner()
         }
     }
