@@ -14,31 +14,36 @@ class TabBarController: UITabBarController {
         super.viewDidLoad()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     @IBAction func refreshButtonPressed(_ sender: UIBarButtonItem) {
-        getStudentInformationArray()
-    }
-    
-    private func getStudentInformationArray() {
-        ParseClient.shared.clearStudentInformationArray()
-        ParseClient.shared.getStudentLocations() { (studentInformationArray, error) in
-            if let studentInformationArray = studentInformationArray {
-                ParseClient.shared.studentInformationArray = studentInformationArray
-            } else {
-                print(error ?? "Could not get studentInformationArray")
-            }
+        ParseClient.shared.retrieveData { (success, error) in
+            
         }
     }
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        if UserAccount.shared.location != nil {
+            let alertController = UIAlertController(title: nil, message: "Would you like to overwrite your current location?", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Overwrite", style: .default))
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default))
+            self.present(alertController, animated: true)
+        }
         performSegue(withIdentifier: SegueIdentifier.toInformationPosting.rawValue, sender: nil)
     }
     
     @IBAction func logoutButtonPressed(_ sender: UIBarButtonItem) {
-        ParseClient.shared.clearStudentInformationArray()
-        performSegue(withIdentifier: SegueIdentifier.unwindToLogin.rawValue, sender: self)
+        UdacityClient.shared.logout { (success, error) in
+            if success {
+                ParseClient.shared.clearStudentInformationArray()
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: SegueIdentifier.unwindToLogin.rawValue, sender: self)
+                }
+            } else {
+                let alertController = UIAlertController(title: nil, message: "Could not log out", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "OK", style: .default))
+                DispatchQueue.main.async {
+                    self.present(alertController, animated: true)
+                }
+            }
+        }
     }
 }

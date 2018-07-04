@@ -28,17 +28,17 @@ class LocationConfirmationViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
-        guard let mapString = mapString, let mediaURL = mediaURL, let latitude = latitude, let longitude = longitude else {
-            return
-        }
-        UserDataService.shared.setLocation(mapString: mapString, mediaURL: mediaURL, latitude: String(latitude), longitude: String(longitude))
-        
-        ParseClient.shared.postStudentLocation { (result, error) in
-            if error != nil {
-                UserDataService.shared.setLocation(mapString: "", mediaURL: "", latitude: "", longitude: "")
-            }
-        }
-        dismiss(animated: true, completion: nil)
+//        guard let mapString = mapString, let mediaURL = mediaURL, let latitude = latitude, let longitude = longitude else {
+//            return
+//        }
+//        UserDataService.shared.setLocation(mapString: mapString, mediaURL: mediaURL, latitude: String(latitude), longitude: String(longitude))
+//        
+//        ParseClient.shared.postStudentLocation { (result, error) in
+//            if error != nil {
+//                UserDataService.shared.setLocation(mapString: "", mediaURL: "", latitude: "", longitude: "")
+//            }
+//        }
+//        dismiss(animated: true, completion: nil)
     }
     
     func createAnnotation() {

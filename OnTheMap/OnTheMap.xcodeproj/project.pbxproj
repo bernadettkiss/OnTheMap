@@ -22,11 +22,11 @@
 		CF4ACB3320D2D19200038A3B /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4ACB3220D2D19200038A3B /* ParseClient.swift */; };
 		CF4F4DC820DD85F400995FF9 /* LocationConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4F4DC720DD85F400995FF9 /* LocationConfirmationViewController.swift */; };
 		CF64245E20D4674A0084D3F8 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF64245D20D4674A0084D3F8 /* TabBarController.swift */; };
-		CF6CF0B420E1576400CFF43D /* UserDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B320E1576400CFF43D /* UserDataService.swift */; };
 		CF6CF0B620E2B54200CFF43D /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B520E2B54200CFF43D /* UdacityClient.swift */; };
 		CF6CF0B820E2B5D200CFF43D /* UdacityClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0B720E2B5D200CFF43D /* UdacityClientConstants.swift */; };
 		CF6CF0BC20E3D7D200CFF43D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */; };
 		CFE4978F20E599A00041F048 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE4978E20E599A00041F048 /* GradientButton.swift */; };
+		CFE4979120EC400B0041F048 /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE4979020EC400B0041F048 /* UserAccount.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,11 +47,11 @@
 		CF4ACB3220D2D19200038A3B /* ParseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		CF4F4DC720DD85F400995FF9 /* LocationConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationConfirmationViewController.swift; sourceTree = "<group>"; };
 		CF64245D20D4674A0084D3F8 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		CF6CF0B320E1576400CFF43D /* UserDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataService.swift; sourceTree = "<group>"; };
 		CF6CF0B520E2B54200CFF43D /* UdacityClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		CF6CF0B720E2B5D200CFF43D /* UdacityClientConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UdacityClientConstants.swift; sourceTree = "<group>"; };
 		CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CFE4978E20E599A00041F048 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
+		CFE4979020EC400B0041F048 /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,12 +123,12 @@
 		CFCB69BB20D05E39008EEE4B /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CF6CF0B320E1576400CFF43D /* UserDataService.swift */,
+				CFE4979020EC400B0041F048 /* UserAccount.swift */,
+				CF07797520D05D72005409E9 /* StudentInformation.swift */,
 				CF6CF0B520E2B54200CFF43D /* UdacityClient.swift */,
 				CF6CF0B720E2B5D200CFF43D /* UdacityClientConstants.swift */,
 				CF4ACB3220D2D19200038A3B /* ParseClient.swift */,
 				CF07797320D05D5F005409E9 /* ParseClientConstants.swift */,
-				CF07797520D05D72005409E9 /* StudentInformation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -205,13 +205,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF4F4DC820DD85F400995FF9 /* LocationConfirmationViewController.swift in Sources */,
-				CF6CF0B420E1576400CFF43D /* UserDataService.swift in Sources */,
 				CF64245E20D4674A0084D3F8 /* TabBarController.swift in Sources */,
 				CF4ACB3320D2D19200038A3B /* ParseClient.swift in Sources */,
 				CF07797620D05D72005409E9 /* StudentInformation.swift in Sources */,
 				CF1AEFAE20D0196B00B0EB8C /* LoginViewController.swift in Sources */,
 				CF07797420D05D5F005409E9 /* ParseClientConstants.swift in Sources */,
 				CF3AD71D20DC0E5A004F6340 /* Constants.swift in Sources */,
+				CFE4979120EC400B0041F048 /* UserAccount.swift in Sources */,
 				CF3AD71B20DC0B60004F6340 /* StudentInformationViewController.swift in Sources */,
 				CF6CF0BC20E3D7D200CFF43D /* NetworkManager.swift in Sources */,
 				CF1AEFAC20D0196B00B0EB8C /* AppDelegate.swift in Sources */,

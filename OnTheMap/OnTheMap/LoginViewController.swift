@@ -18,18 +18,36 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
-        guard let email = emailTextField.text, emailTextField.text != "" else {return}
-        guard let password = passwordTextField.text, passwordTextField.text != "" else {return}
-        UdacityClient.shared.login(withEmail: email, andPassword: password) { (success) in
+        guard let email = emailTextField.text, emailTextField.text != "" else {
+            showAlert(forAppError: .emptyCredentials)
+            return
+        }
+        guard let password = passwordTextField.text, passwordTextField.text != "" else {
+            showAlert(forAppError: .emptyCredentials)
+            return
+        }
+        UdacityClient.shared.login(withEmail: email, andPassword: password) { (success, error) in
+            if error == AppError.incorrectCredentials {
+                DispatchQueue.main.async {
+                    self.showAlert(forAppError: .incorrectCredentials)
+                }
+            }
+            if error == AppError.networkFailure {
+                DispatchQueue.main.async {
+                    self.showAlert(forAppError: .networkFailure)
+                }
+            }
             if success {
-                ParseClient.shared.getStudentLocations() { (studentInformationArray, error) in
-                    if let studentInformationArray = studentInformationArray {
-                        ParseClient.shared.studentInformationArray = studentInformationArray
+                ParseClient.shared.getUserLocation()
+                ParseClient.shared.retrieveData() { (success, error) in
+                    if success {
                         DispatchQueue.main.async {
                             self.performSegue(withIdentifier: SegueIdentifier.toStudentInformation.rawValue, sender: nil)
                         }
                     } else {
-                        print(error ?? "Could not get studentInformationArray")
+                        DispatchQueue.main.async {
+                            self.showAlert(forAppError: .noData)
+                        }
                     }
                 }
             }
@@ -43,4 +61,22 @@ class LoginViewController: UIViewController {
     
     @IBAction func unwindToLoginScreen(segue: UIStoryboardSegue) {}
     
+    private func showAlert(forAppError appError: AppError) {
+        var message = String()
+        switch appError {
+        case .emptyCredentials:
+            message = "Please enter your email and password"
+        case .incorrectCredentials:
+            message = "Please enter valid credentials"
+        case .networkFailure:
+            message = "There was a problem with the network. Please try again"
+        case .noData:
+            message = "Could not retrieve data from the server"
+        default:
+            message = "An error has occured"
+        }
+        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alertController, animated: true)
+    }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 let udacitySignUpURL = "https://auth.udacity.com/sign-up"
 
@@ -26,3 +27,12 @@ enum SegueIdentifier: String {
     case toInformationPosting = "toInformationPosting"
     case toLocationConfirmation = "toLocationConfirmation"
 }
+
+enum AppError {
+    case emptyCredentials
+    case incorrectCredentials
+    case networkFailure
+    case noData
+    case logoutError
+}
+

@@ -16,7 +16,45 @@ class ParseClient {
     let headerParameters = [ParseClient.ParameterKeys.ParseAppId: ParseClient.ParameterValues.ParseAppId,
                             ParseClient.ParameterKeys.RestApiKey: ParseClient.ParameterValues.RestApiKey]
     
-    func getStudentLocations(_ completionHandlerForStudentLocations: @escaping (_ result: [StudentInformation]?, _ error: NSError?) -> Void) {
+    func retrieveData(completion: @escaping (_ success: Bool, _ error: AppError?) -> Void) {
+        clearStudentInformationArray()
+        getStudentLocations() { (studentInformationArray, error) in
+            if let studentInformationArray = studentInformationArray {
+                self.studentInformationArray = studentInformationArray
+                completion(true, nil)
+            } else {
+                print(error ?? "Could not get studentInformationArray")
+                completion(false, .noData)
+            }
+        }
+    }
+    
+    func getUserLocation() {
+        guard let accountKey = UserAccount.shared.key else {
+            return
+        }
+        let accountKey2 = "1235"
+        let queryString = "{\"\(ParseClient.ParameterValues.UniqueKey)\":\"\(accountKey2)\"}"
+        let urlParameters = [ParseClient.ParameterKeys.Where: queryString]
+        
+        NetworkManager.shared.request(client: .parse, urlParameters: urlParameters, httpMethod: .get, headerParameters: headerParameters, jsonBody: nil) { (results, error) in
+            
+            if let error = error {
+                print(error)
+            } else {
+                if let results = results?[ParseClient.JSONResponseKeys.Results] as? [[String: AnyObject]] {
+                    let studentInformationArray = StudentInformation.studentInformationArrayFrom(results: results)
+                    if !studentInformationArray.isEmpty {
+                        UserAccount.shared.setStudentLocation(studentInformationArray[0])
+                    } else {
+                        return
+                    }
+                }
+            }
+        }
+    }
+    
+    private func getStudentLocations(_ completionHandlerForStudentLocations: @escaping (_ result: [StudentInformation]?, _ error: NSError?) -> Void) {
         NotificationCenter.default.post(name: StudentLocations.willLoad.notification, object: nil)
         
         let urlParameters = [ParseClient.ParameterKeys.Limit: ParseClient.ParameterValues.Limit,
@@ -41,9 +79,9 @@ class ParseClient {
     }
     
     func postStudentLocation(_ completionHandlerForStudentLocation:  @escaping (_ result: String?, _ error: NSError?) -> Void) {
-        let jsonBody = "{\"\(ParseClient.JSONBodyKeys.UniqueKey)\": \"\(UserDataService.shared.uniqueKey)\", \"\(ParseClient.JSONBodyKeys.FirstName)\": \"\(UserDataService.shared.firstName)\", \"\(ParseClient.JSONBodyKeys.LastName)\": \"\(UserDataService.shared.lastName)\",\"\(ParseClient.JSONBodyKeys.MapString)\": \"\(UserDataService.shared.mapString)\", \"\(ParseClient.JSONBodyKeys.MediaURL)\": \"\(UserDataService.shared.mediaURL)\",\"\(ParseClient.JSONBodyKeys.Latitude)\": \(UserDataService.shared.latitude), \"\(ParseClient.JSONBodyKeys.Longitude)\": \(UserDataService.shared.longitude)}"
-        
-        NetworkManager.shared.request(client: .parse, urlParameters: nil, httpMethod: .post, headerParameters: headerParameters, jsonBody: jsonBody) { (results, error) in
+//        let jsonBody = "{\"\(ParseClient.JSONBodyKeys.UniqueKey)\": \"\(UserDataService.shared.uniqueKey)\", \"\(ParseClient.JSONBodyKeys.FirstName)\": \"\(UserDataService.shared.firstName)\", \"\(ParseClient.JSONBodyKeys.LastName)\": \"\(UserDataService.shared.lastName)\",\"\(ParseClient.JSONBodyKeys.MapString)\": \"\(UserDataService.shared.mapString)\", \"\(ParseClient.JSONBodyKeys.MediaURL)\": \"\(UserDataService.shared.mediaURL)\",\"\(ParseClient.JSONBodyKeys.Latitude)\": \(UserDataService.shared.latitude), \"\(ParseClient.JSONBodyKeys.Longitude)\": \(UserDataService.shared.longitude)}"
+//        
+        NetworkManager.shared.request(client: .parse, urlParameters: nil, httpMethod: .post, headerParameters: headerParameters, jsonBody: nil) { (results, error) in
             if let error = error {
                 completionHandlerForStudentLocation(nil, error)
             } else {
@@ -51,7 +89,6 @@ class ParseClient {
                     completionHandlerForStudentLocation(results, nil)
                 } else {
                     completionHandlerForStudentLocation(nil, NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postStudentLocation"]))
-                    
                 }
             }
         }

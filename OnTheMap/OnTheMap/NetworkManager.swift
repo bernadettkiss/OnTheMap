@@ -32,6 +32,7 @@ class NetworkManager {
     func request(client: Client, urlParameters: Parameters?, httpMethod: HTTPMethod, headerParameters: Parameters?, jsonBody: String?, completionHandler: @escaping CompletionHandler) {
         self.client = client
         let url = buildURL(client: client, urlParameters: urlParameters)
+        print(url)
         let request = buildRequest(client: client, url: url, httpMethod: httpMethod, headerParameters: headerParameters, jsonBody: jsonBody)
         let task = createTask(with: request) { (results, error) in
             completionHandler(results, error)
@@ -63,11 +64,22 @@ class NetworkManager {
     
     private func buildRequest(client: Client, url: URL, httpMethod: HTTPMethod, headerParameters: Parameters?, jsonBody: String?) -> URLRequest {
         var request = URLRequest(url: url)
+        request.httpMethod = httpMethod.rawValue
         
-        if client == .udacity {
+        if client == .udacity && httpMethod == .delete {
+            var xsrfCookie: HTTPCookie? = nil
+            let sharedCookieStorage = HTTPCookieStorage.shared
+            for cookie in sharedCookieStorage.cookies! {
+                if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+            }
+            if let xsrfCookie = xsrfCookie {
+                request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+            }
+        }
+        
+        if client == .udacity && httpMethod == .post {
             request.addValue("application/json", forHTTPHeaderField: "Accept")
         }
-        request.httpMethod = httpMethod.rawValue
         if httpMethod == .post {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
@@ -119,7 +131,6 @@ class NetworkManager {
         var parsedResult: AnyObject! = nil
         do {
             parsedResult = try JSONSerialization.jsonObject(with: result, options: .allowFragments) as AnyObject
-            print(parsedResult)
         } catch {
             completionHandler(nil, error as NSError)
         }
