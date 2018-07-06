@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class LocationConfirmationViewController: UIViewController, MKMapViewDelegate {
+class LocationConfirmationViewController: AlertPresentationViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -17,7 +17,7 @@ class LocationConfirmationViewController: UIViewController, MKMapViewDelegate {
     var latitude: CLLocationDegrees?
     var longitude: CLLocationDegrees?
     var mediaURL: String?
-    let regionRadius: Double = 1000
+    let regionRadius: Double = 10000
     var annotation = MKPointAnnotation()
     
     override func viewDidLoad() {
@@ -28,17 +28,33 @@ class LocationConfirmationViewController: UIViewController, MKMapViewDelegate {
     }
     
     @IBAction func submitButtonPressed(_ sender: UIButton) {
-//        guard let mapString = mapString, let mediaURL = mediaURL, let latitude = latitude, let longitude = longitude else {
-//            return
-//        }
-//        UserDataService.shared.setLocation(mapString: mapString, mediaURL: mediaURL, latitude: String(latitude), longitude: String(longitude))
-//        
-//        ParseClient.shared.postStudentLocation { (result, error) in
-//            if error != nil {
-//                UserDataService.shared.setLocation(mapString: "", mediaURL: "", latitude: "", longitude: "")
-//            }
-//        }
-//        dismiss(animated: true, completion: nil)
+        guard let mapString = mapString, let mediaURL = mediaURL, let latitude = latitude, let longitude = longitude else {
+            showAlert(forAppError: .error)
+            return
+        }
+        if UserAccount.shared.location == nil {
+            ParseClient.shared.post(mapString: mapString, mediaURL: mediaURL, latitude: String(latitude), longitude: String(longitude)) { (success) in
+                DispatchQueue.main.async {
+                    if success {
+                        ParseClient.shared.getUserLocation()
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.showAlert(forAppError: .postError)
+                    }
+                }
+            }
+        } else {
+            ParseClient.shared.update(mapString: mapString, mediaURL: mediaURL, latitude: String(latitude), longitude: String(longitude)) { (success) in
+                DispatchQueue.main.async {
+                    if success {
+                        ParseClient.shared.getUserLocation()
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.showAlert(forAppError: .postError)
+                    }
+                }
+            }
+        }
     }
     
     func createAnnotation() {

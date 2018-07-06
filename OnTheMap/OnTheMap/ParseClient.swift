@@ -11,36 +11,22 @@ import Foundation
 class ParseClient {
     
     static let shared = ParseClient()
-    var studentInformationArray = [StudentInformation]()
     
-    let headerParameters = [ParseClient.ParameterKeys.ParseAppId: ParseClient.ParameterValues.ParseAppId,
-                            ParseClient.ParameterKeys.RestApiKey: ParseClient.ParameterValues.RestApiKey]
+    public private(set) var studentInformationArray = [StudentInformation]()
     
-    func retrieveData(completion: @escaping (_ success: Bool, _ error: AppError?) -> Void) {
-        clearStudentInformationArray()
-        getStudentLocations() { (studentInformationArray, error) in
-            if let studentInformationArray = studentInformationArray {
-                self.studentInformationArray = studentInformationArray
-                completion(true, nil)
-            } else {
-                print(error ?? "Could not get studentInformationArray")
-                completion(false, .noData)
-            }
-        }
-    }
+    private let headerParameters = [ParseClient.ParameterKeys.ParseAppId: ParseClient.ParameterValues.ParseAppId,
+                                    ParseClient.ParameterKeys.RestApiKey: ParseClient.ParameterValues.RestApiKey]
     
     func getUserLocation() {
-        guard let accountKey = UserAccount.shared.key else {
+        guard let key = UserAccount.shared.key else {
             return
         }
-        let accountKey2 = "1235"
-        let queryString = "{\"\(ParseClient.ParameterValues.UniqueKey)\":\"\(accountKey2)\"}"
+        let queryString = "{\"\(ParseClient.ParameterValues.UniqueKey)\":\"\(key)\"}"
         let urlParameters = [ParseClient.ParameterKeys.Where: queryString]
         
-        NetworkManager.shared.request(client: .parse, urlParameters: urlParameters, httpMethod: .get, headerParameters: headerParameters, jsonBody: nil) { (results, error) in
-            
-            if let error = error {
-                print(error)
+        NetworkManager.shared.request(client: .parse, pathExtension: nil, urlParameters: urlParameters, httpMethod: .get, headerParameters: headerParameters, jsonBody: nil) { (results, error) in
+            if error != nil {
+                return
             } else {
                 if let results = results?[ParseClient.JSONResponseKeys.Results] as? [[String: AnyObject]] {
                     let studentInformationArray = StudentInformation.studentInformationArrayFrom(results: results)
@@ -54,44 +40,63 @@ class ParseClient {
         }
     }
     
-    private func getStudentLocations(_ completionHandlerForStudentLocations: @escaping (_ result: [StudentInformation]?, _ error: NSError?) -> Void) {
-        NotificationCenter.default.post(name: StudentLocations.willLoad.notification, object: nil)
+    func retrieveData(completion: @escaping (_ success: Bool) -> Void) {
+        clearStudentInformationArray()
         
         let urlParameters = [ParseClient.ParameterKeys.Limit: ParseClient.ParameterValues.Limit,
                              ParseClient.ParameterKeys.Order: ParseClient.ParameterValues.Order]
         
-        NetworkManager.shared.request(client: .parse, urlParameters: urlParameters, httpMethod: .get, headerParameters: headerParameters, jsonBody: nil) { (results, error) in
-            
-            if let error = error {
-                completionHandlerForStudentLocations(nil, error)
-                NotificationCenter.default.post(name: StudentLocations.couldNotLoad.notification, object: nil)
+        NetworkManager.shared.request(client: .parse, pathExtension: nil, urlParameters: urlParameters, httpMethod: .get, headerParameters: headerParameters, jsonBody: nil) { (results, error) in
+            if error != nil {
+                completion(false)
             } else {
                 if let results = results?[ParseClient.JSONResponseKeys.Results] as? [[String: AnyObject]] {
                     self.studentInformationArray = StudentInformation.studentInformationArrayFrom(results: results)
-                    NotificationCenter.default.post(name: StudentLocations.didLoad.notification, object: nil)
-                    completionHandlerForStudentLocations(self.studentInformationArray, nil)
+                    completion(true)
                 } else {
-                    completionHandlerForStudentLocations(nil, NSError(domain: "getStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocations"]))
-                    NotificationCenter.default.post(name: StudentLocations.couldNotLoad.notification, object: nil)
+                    completion(false)
                 }
             }
         }
     }
     
-    func postStudentLocation(_ completionHandlerForStudentLocation:  @escaping (_ result: String?, _ error: NSError?) -> Void) {
-//        let jsonBody = "{\"\(ParseClient.JSONBodyKeys.UniqueKey)\": \"\(UserDataService.shared.uniqueKey)\", \"\(ParseClient.JSONBodyKeys.FirstName)\": \"\(UserDataService.shared.firstName)\", \"\(ParseClient.JSONBodyKeys.LastName)\": \"\(UserDataService.shared.lastName)\",\"\(ParseClient.JSONBodyKeys.MapString)\": \"\(UserDataService.shared.mapString)\", \"\(ParseClient.JSONBodyKeys.MediaURL)\": \"\(UserDataService.shared.mediaURL)\",\"\(ParseClient.JSONBodyKeys.Latitude)\": \(UserDataService.shared.latitude), \"\(ParseClient.JSONBodyKeys.Longitude)\": \(UserDataService.shared.longitude)}"
-//        
-        NetworkManager.shared.request(client: .parse, urlParameters: nil, httpMethod: .post, headerParameters: headerParameters, jsonBody: nil) { (results, error) in
-            if let error = error {
-                completionHandlerForStudentLocation(nil, error)
+    func post(mapString: String, mediaURL: String, latitude: String, longitude: String, completion: @escaping (_ success: Bool) -> Void) {
+        let jsonBody = buildJSONBody(mapString: mapString, mediaURL: mediaURL, latitude: latitude, longitude: longitude)
+        
+        NetworkManager.shared.request(client: .parse, pathExtension: nil, urlParameters: nil, httpMethod: .post, headerParameters: headerParameters, jsonBody: jsonBody) { (results, error) in
+            if error != nil {
+                completion(false)
             } else {
-                if let results = results?[ParseClient.JSONResponseKeys.CreatedAt] as? String {
-                    completionHandlerForStudentLocation(results, nil)
+                if let _ = results?[ParseClient.JSONResponseKeys.CreatedAt] as? String {
+                    completion(true)
                 } else {
-                    completionHandlerForStudentLocation(nil, NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postStudentLocation"]))
+                    completion(false)
                 }
             }
         }
+    }
+    
+    func update(mapString: String, mediaURL: String, latitude: String, longitude: String, completion: @escaping (_ success: Bool) -> Void) {
+        let jsonBody = buildJSONBody(mapString: mapString, mediaURL: mediaURL, latitude: latitude, longitude: longitude)
+        
+        if let pathExtension = UserAccount.shared.location?.id {
+            NetworkManager.shared.request(client: .parse, pathExtension: pathExtension, urlParameters: nil, httpMethod: .put, headerParameters: headerParameters, jsonBody: jsonBody) { (results, error) in
+                if error != nil {
+                    completion(false)
+                } else {
+                    if let _ = results?[ParseClient.JSONResponseKeys.UpdatedAt] as? String {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func buildJSONBody(mapString: String, mediaURL: String, latitude: String, longitude: String) -> String {
+        let jsonBody = "{\"\(ParseClient.JSONBodyKeys.UniqueKey)\": \"\(UserAccount.shared.key)\", \"\(ParseClient.JSONBodyKeys.FirstName)\": \"\(UserAccount.shared.firstName)\", \"\(ParseClient.JSONBodyKeys.LastName)\": \"\(UserAccount.shared.lastName)\",\"\(ParseClient.JSONBodyKeys.MapString)\": \"\(mapString)\", \"\(ParseClient.JSONBodyKeys.MediaURL)\": \"\(mediaURL)\",\"\(ParseClient.JSONBodyKeys.Latitude)\": \(latitude), \"\(ParseClient.JSONBodyKeys.Longitude)\": \(longitude)}"
+        return jsonBody
     }
     
     func clearStudentInformationArray() {

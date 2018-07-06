@@ -21,8 +21,7 @@ class UserAccount {
         self.key = accountKey
     }
     
-    func setStudentLocation(_ location: StudentInformation) {
+    func setStudentLocation(_ location: StudentInformation?) {
         self.location = location
     }
-    
 }

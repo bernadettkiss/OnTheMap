@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListViewController: StudentInformationViewController, UITableViewDataSource, UITableViewDelegate {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -20,10 +20,10 @@ class ListViewController: StudentInformationViewController, UITableViewDataSourc
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(studentInformationDidLoad(_:)), name: NSNotification.Name(rawValue: "StudentLocationsDidLoad"), object: nil)
     }
     
-    override func refresh() {
-        super.refresh()
+    @objc func studentInformationDidLoad(_ notification: Notification) {
         tableView.reloadData()
     }
     
@@ -36,7 +36,6 @@ class ListViewController: StudentInformationViewController, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentInformation", for: indexPath) as UITableViewCell?
         let student = ParseClient.shared.studentInformationArray[indexPath.row]
-        
         cell?.textLabel?.text = "\(student.firstName ?? "First name") \(student.lastName ?? "Last name")"
         cell?.detailTextLabel?.text = student.mediaURL ?? "No URL"
         cell?.imageView?.image = UIImage(named: "icon_pin")

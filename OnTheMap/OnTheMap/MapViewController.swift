@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: StudentInformationViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -18,15 +18,14 @@ class MapViewController: StudentInformationViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        createAnnotationFor(studentInformationArray: ParseClient.shared.studentInformationArray)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(studentInformationDidLoad(_:)), name: Notification.Name("StudentLocationsDidLoad"), object: nil)
     }
     
-    override func refresh() {
-        super.refresh()
+    @objc func studentInformationDidLoad(_ notification: Notification) {
         mapView.removeAnnotations(annotations)
         annotations.removeAll()
         createAnnotationFor(studentInformationArray: ParseClient.shared.studentInformationArray)
@@ -34,9 +33,9 @@ class MapViewController: StudentInformationViewController, MKMapViewDelegate {
     
     func createAnnotationFor(studentInformationArray: [StudentInformation]) {
         for studentInformation in studentInformationArray {
-            if let lat = studentInformation.latitude, let lon = studentInformation.longitude {
-                let latitude = CLLocationDegrees(lat)
-                let longitude = CLLocationDegrees(lon)
+            if let latitudeString = studentInformation.latitude, let longitudeString = studentInformation.longitude {
+                let latitude = CLLocationDegrees(latitudeString)
+                let longitude = CLLocationDegrees(longitudeString)
                 let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate

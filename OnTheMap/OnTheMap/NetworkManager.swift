@@ -26,32 +26,39 @@ enum HTTPMethod: String {
 class NetworkManager {
     
     static let shared = NetworkManager()
+    
     var session = URLSession.shared
     var client: Client?
     
-    func request(client: Client, urlParameters: Parameters?, httpMethod: HTTPMethod, headerParameters: Parameters?, jsonBody: String?, completionHandler: @escaping CompletionHandler) {
+    func request(client: Client, pathExtension: String?, urlParameters: Parameters?, httpMethod: HTTPMethod, headerParameters: Parameters?, jsonBody: String?, completionHandler: @escaping CompletionHandler) {
         self.client = client
-        let url = buildURL(client: client, urlParameters: urlParameters)
-        print(url)
+        let url = buildURL(client: client, pathExtension: pathExtension, urlParameters: urlParameters)
         let request = buildRequest(client: client, url: url, httpMethod: httpMethod, headerParameters: headerParameters, jsonBody: jsonBody)
-        let task = createTask(with: request) { (results, error) in
+        let _ = createTask(with: request) { (results, error) in
             completionHandler(results, error)
             return
         }
     }
     
-    private func buildURL(client: Client, urlParameters: Parameters?) -> URL {
+    private func buildURL(client: Client, pathExtension: String?, urlParameters: Parameters?) -> URL {
         var components = URLComponents()
+        
+        var pathExtensionString = ""
+        if let pathExtension = pathExtension {
+            pathExtensionString = "/" + pathExtension
+        }
+        
         switch client {
         case .udacity:
             components.scheme = UdacityClient.Constants.ApiScheme
             components.host = UdacityClient.Constants.ApiHost
-            components.path = UdacityClient.Constants.ApiPath
+            components.path = UdacityClient.Constants.ApiPath + pathExtensionString
         case .parse:
             components.scheme = ParseClient.Constants.ApiScheme
             components.host = ParseClient.Constants.ApiHost
-            components.path = ParseClient.Constants.ApiPath
+            components.path = ParseClient.Constants.ApiPath + pathExtensionString
         }
+        
         if let urlParameters = urlParameters {
             components.queryItems = [URLQueryItem]()
             for (key, value) in urlParameters {
@@ -59,6 +66,7 @@ class NetworkManager {
                 components.queryItems?.append(queryItem)
             }
         }
+        
         return components.url!
     }
     
@@ -80,17 +88,21 @@ class NetworkManager {
         if client == .udacity && httpMethod == .post {
             request.addValue("application/json", forHTTPHeaderField: "Accept")
         }
+        
         if httpMethod == .post {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         }
+        
         if let headerParameters = headerParameters {
             for (key, value) in headerParameters {
                 request.addValue("\(value)", forHTTPHeaderField: key)
             }
         }
+        
         if let jsonBody = jsonBody {
             request.httpBody = jsonBody.data(using: .utf8)
         }
+        
         return request
     }
     
@@ -98,24 +110,24 @@ class NetworkManager {
         let task = session.dataTask(with: request) { (data, response, error) in
             
             guard error == nil  else {
-                print("There was an error with your request: \(error!)")
                 completionHandler(nil, error! as NSError)
                 return
             }
             
-            if request.httpMethod == "GET" {
+            if request.httpMethod == HTTPMethod.get.rawValue {
                 guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                    print("Your request returned a status code other than 2xx!")
-                    completionHandler(nil, error! as NSError)
+                    let error = "Your request returned a status code other than 2xx!"
+                    completionHandler(nil, NSError(domain: "createTask", code: 1, userInfo: [NSLocalizedDescriptionKey: error]))
                     return
                 }
             }
             
             guard let data = data else {
-                print("No data was returned by the request!")
-                completionHandler(nil, error! as NSError)
+                let error = "No data was returned by the request!"
+                completionHandler(nil, NSError(domain: "createTask", code: 1, userInfo: [NSLocalizedDescriptionKey: error]))
                 return
             }
+            
             self.convertData(data, completionHandler: completionHandler)
         }
         task.resume()
@@ -124,10 +136,12 @@ class NetworkManager {
     
     private func convertData(_ data: Data, completionHandler: CompletionHandler) {
         var result = data
+        
         if self.client == .udacity {
             let range = Range(5..<result.count)
             result = data.subdata(in: range)
         }
+        
         var parsedResult: AnyObject! = nil
         do {
             parsedResult = try JSONSerialization.jsonObject(with: result, options: .allowFragments) as AnyObject

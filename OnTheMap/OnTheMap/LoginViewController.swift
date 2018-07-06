@@ -8,47 +8,39 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: AlertPresentationViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+    
+    @IBAction func backgroundTapped(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
     }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
-        guard let email = emailTextField.text, emailTextField.text != "" else {
-            showAlert(forAppError: .emptyCredentials)
-            return
-        }
-        guard let password = passwordTextField.text, passwordTextField.text != "" else {
+        guard let email = emailTextField.text, emailTextField.text != "", let password = passwordTextField.text, passwordTextField.text != "" else {
             showAlert(forAppError: .emptyCredentials)
             return
         }
         UdacityClient.shared.login(withEmail: email, andPassword: password) { (success, error) in
-            if error == AppError.incorrectCredentials {
-                DispatchQueue.main.async {
-                    self.showAlert(forAppError: .incorrectCredentials)
+            DispatchQueue.main.async {
+                if let error = error {
+                    self.showAlert(forAppError: error)
                 }
-            }
-            if error == AppError.networkFailure {
-                DispatchQueue.main.async {
-                    self.showAlert(forAppError: .networkFailure)
-                }
-            }
-            if success {
-                ParseClient.shared.getUserLocation()
-                ParseClient.shared.retrieveData() { (success, error) in
-                    if success {
-                        DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: SegueIdentifier.toStudentInformation.rawValue, sender: nil)
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            self.showAlert(forAppError: .noData)
-                        }
-                    }
+                if success {
+                    ParseClient.shared.getUserLocation()
+                    self.performSegue(withIdentifier: SegueIdentifier.toStudentInformation.rawValue, sender: nil)
                 }
             }
         }
@@ -61,22 +53,10 @@ class LoginViewController: UIViewController {
     
     @IBAction func unwindToLoginScreen(segue: UIStoryboardSegue) {}
     
-    private func showAlert(forAppError appError: AppError) {
-        var message = String()
-        switch appError {
-        case .emptyCredentials:
-            message = "Please enter your email and password"
-        case .incorrectCredentials:
-            message = "Please enter valid credentials"
-        case .networkFailure:
-            message = "There was a problem with the network. Please try again"
-        case .noData:
-            message = "Could not retrieve data from the server"
-        default:
-            message = "An error has occured"
-        }
-        let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alertController, animated: true)
+    // MARK: - UITextFieldDelegate methods
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

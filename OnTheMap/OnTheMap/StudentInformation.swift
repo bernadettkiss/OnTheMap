@@ -10,8 +10,8 @@ import Foundation
 
 struct StudentInformation {
     
-    private let id: String?
-    private let uniqueKey: String?
+    let id: String?
+    let uniqueKey: String?
     let firstName: String?
     let lastName: String?
     let mapString: String?
