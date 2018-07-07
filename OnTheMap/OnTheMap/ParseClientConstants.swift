@@ -30,7 +30,6 @@ extension ParseClient {
         static let Limit = "100"
         static let Order = "-updatedAt"
         static let UniqueKey = "uniqueKey"
-        static let ContentType = "application/json"
     }
     
     struct JSONBodyKeys {

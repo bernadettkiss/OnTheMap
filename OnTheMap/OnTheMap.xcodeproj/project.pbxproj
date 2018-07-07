@@ -26,7 +26,7 @@
 		CF6CF0BC20E3D7D200CFF43D /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */; };
 		CFE4978F20E599A00041F048 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE4978E20E599A00041F048 /* GradientButton.swift */; };
 		CFE4979120EC400B0041F048 /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE4979020EC400B0041F048 /* UserAccount.swift */; };
-		CFE4979320EFB1480041F048 /* AlertPresentationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE4979220EFB1480041F048 /* AlertPresentationViewController.swift */; };
+		CFE4979D20F174E30041F048 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFE4979C20F174E30041F048 /* UIViewController+Alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,7 +51,7 @@
 		CF6CF0BB20E3D7D200CFF43D /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CFE4978E20E599A00041F048 /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		CFE4979020EC400B0041F048 /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
-		CFE4979220EFB1480041F048 /* AlertPresentationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPresentationViewController.swift; sourceTree = "<group>"; };
+		CFE4979C20F174E30041F048 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +74,7 @@
 				CF07796A20D03973005409E9 /* ListViewController.swift */,
 				CF3AD71E20DC4092004F6340 /* InformationPostingViewController.swift */,
 				CF4F4DC720DD85F400995FF9 /* LocationConfirmationViewController.swift */,
-				CFE4979220EFB1480041F048 /* AlertPresentationViewController.swift */,
+				CFE4979C20F174E30041F048 /* UIViewController+Alert.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -213,6 +213,7 @@
 				CF3AD71D20DC0E5A004F6340 /* Constants.swift in Sources */,
 				CFE4979120EC400B0041F048 /* UserAccount.swift in Sources */,
 				CF6CF0BC20E3D7D200CFF43D /* NetworkManager.swift in Sources */,
+				CFE4979D20F174E30041F048 /* UIViewController+Alert.swift in Sources */,
 				CF1AEFAC20D0196B00B0EB8C /* AppDelegate.swift in Sources */,
 				CFE4978F20E599A00041F048 /* GradientButton.swift in Sources */,
 				CF07796B20D03973005409E9 /* ListViewController.swift in Sources */,
@@ -220,7 +221,6 @@
 				CF3AD71F20DC4092004F6340 /* InformationPostingViewController.swift in Sources */,
 				CF6CF0B620E2B54200CFF43D /* UdacityClient.swift in Sources */,
 				CF07796920D037CA005409E9 /* MapViewController.swift in Sources */,
-				CFE4979320EFB1480041F048 /* AlertPresentationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

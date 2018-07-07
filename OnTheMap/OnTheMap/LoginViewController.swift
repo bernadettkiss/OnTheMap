@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: AlertPresentationViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -18,7 +18,7 @@ class LoginViewController: AlertPresentationViewController, UITextFieldDelegate 
         emailTextField.delegate = self
         passwordTextField.delegate = self
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         view.endEditing(true)
@@ -29,6 +29,7 @@ class LoginViewController: AlertPresentationViewController, UITextFieldDelegate 
     }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
+        view.endEditing(true)
         guard let email = emailTextField.text, emailTextField.text != "", let password = passwordTextField.text, passwordTextField.text != "" else {
             showAlert(forAppError: .emptyCredentials)
             return

@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class LocationConfirmationViewController: AlertPresentationViewController, MKMapViewDelegate {
+class LocationConfirmationViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     

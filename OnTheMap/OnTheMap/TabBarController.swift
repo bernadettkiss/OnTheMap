@@ -64,13 +64,6 @@ class TabBarController: UITabBarController {
         }
     }
     
-    private func showAlert(forAppError appError: AppError) {
-        let message = appError.rawValue
-        let alertController = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alertController, animated: true)
-    }
-    
     private func addActivityIndicator() {
         activityIndicator = UIActivityIndicatorView()
         activityIndicator?.center = CGPoint(x: (UIScreen.main.bounds.width / 2) - ((activityIndicator?.frame.width)! / 2), y: (UIScreen.main.bounds.height / 2) - ((activityIndicator?.frame.height)! / 2))

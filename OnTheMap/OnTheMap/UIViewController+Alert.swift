@@ -1,18 +1,14 @@
 //
-//  AlertPresentationViewController.swift
+//  UIViewController+Alert.swift
 //  OnTheMap
 //
-//  Created by Bernadett Kiss on 7/6/18.
+//  Created by Bernadett Kiss on 7/7/18.
 //  Copyright © 2018 Bernadett Kiss. All rights reserved.
 //
 
 import UIKit
 
-class AlertPresentationViewController: UIViewController {
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+extension UIViewController {
     
     func showAlert(forAppError appError: AppError) {
         let message = appError.rawValue

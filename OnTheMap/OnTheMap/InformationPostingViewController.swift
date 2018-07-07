@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class InformationPostingViewController: AlertPresentationViewController, UITextFieldDelegate {
+class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var locationTextField: UITextField!
     @IBOutlet weak var linkTextField: UITextField!
@@ -42,6 +42,7 @@ class InformationPostingViewController: AlertPresentationViewController, UITextF
     }
     
     @IBAction func findLocationButtonPressed(_ sender: UIButton) {
+        view.endEditing(true)
         guard let location = locationTextField.text, locationTextField.text != "", let urlString = linkTextField.text, linkTextField.text != "" else {
             showAlert(forAppError: .emptyLocation)
             return
