@@ -43,19 +43,21 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func findLocationButtonPressed(_ sender: UIButton) {
         view.endEditing(true)
+        self.addActivityIndicator()
         guard let location = locationTextField.text, locationTextField.text != "", let urlString = linkTextField.text, linkTextField.text != "" else {
+            self.removeActivityIndicator()
             showAlert(forAppError: .emptyLocation)
             return
         }
         if verifyURL(urlString: urlString) {
             self.mediaURL = urlString
         } else {
+            self.removeActivityIndicator()
             showAlert(forAppError: .incorrectLink)
             return
         }
         
         geoCoder.geocodeAddressString(location) { (placemarks, error) in
-            self.addActivityIndicator()
             guard let placemarks = placemarks, let location = placemarks.first?.location else {
                 self.removeActivityIndicator()
                 self.showAlert(forAppError: .geocodingFailure)
@@ -95,6 +97,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func addActivityIndicator() {
+        view.isUserInteractionEnabled = false
         activityIndicator = UIActivityIndicatorView()
         activityIndicator?.center = CGPoint(x: (UIScreen.main.bounds.width / 2) - ((activityIndicator?.frame.width)! / 2), y: (UIScreen.main.bounds.height / 2) - ((activityIndicator?.frame.height)! / 2))
         activityIndicator?.activityIndicatorViewStyle = .whiteLarge
@@ -104,6 +107,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func removeActivityIndicator() {
+        view.isUserInteractionEnabled = true
         if activityIndicator != nil {
             activityIndicator?.removeFromSuperview()
         }

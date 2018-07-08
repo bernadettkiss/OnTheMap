@@ -18,7 +18,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         emailTextField.delegate = self
         passwordTextField.delegate = self
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         view.endEditing(true)
@@ -30,12 +30,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         view.endEditing(true)
+        view.isUserInteractionEnabled = false
         guard let email = emailTextField.text, emailTextField.text != "", let password = passwordTextField.text, passwordTextField.text != "" else {
+            view.isUserInteractionEnabled = true
             showAlert(forAppError: .emptyCredentials)
             return
         }
         UdacityClient.shared.login(withEmail: email, andPassword: password) { (success, error) in
             DispatchQueue.main.async {
+                self.view.isUserInteractionEnabled = true
                 if let error = error {
                     self.showAlert(forAppError: error)
                 }

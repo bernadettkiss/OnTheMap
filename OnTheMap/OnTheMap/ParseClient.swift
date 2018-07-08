@@ -94,8 +94,11 @@ class ParseClient {
         }
     }
     
-    private func buildJSONBody(mapString: String, mediaURL: String, latitude: String, longitude: String) -> String {
-        let jsonBody = "{\"\(ParseClient.JSONBodyKeys.UniqueKey)\": \"\(UserAccount.shared.key)\", \"\(ParseClient.JSONBodyKeys.FirstName)\": \"\(UserAccount.shared.firstName)\", \"\(ParseClient.JSONBodyKeys.LastName)\": \"\(UserAccount.shared.lastName)\",\"\(ParseClient.JSONBodyKeys.MapString)\": \"\(mapString)\", \"\(ParseClient.JSONBodyKeys.MediaURL)\": \"\(mediaURL)\",\"\(ParseClient.JSONBodyKeys.Latitude)\": \(latitude), \"\(ParseClient.JSONBodyKeys.Longitude)\": \(longitude)}"
+    private func buildJSONBody(mapString: String, mediaURL: String, latitude: String, longitude: String) -> String? {
+        guard let key = UserAccount.shared.key else {
+            return nil
+        }
+        let jsonBody = "{\"\(ParseClient.JSONBodyKeys.UniqueKey)\": \"\(key)\", \"\(ParseClient.JSONBodyKeys.FirstName)\": \"\(UserAccount.shared.firstName)\", \"\(ParseClient.JSONBodyKeys.LastName)\": \"\(UserAccount.shared.lastName)\",\"\(ParseClient.JSONBodyKeys.MapString)\": \"\(mapString)\", \"\(ParseClient.JSONBodyKeys.MediaURL)\": \"\(mediaURL)\",\"\(ParseClient.JSONBodyKeys.Latitude)\": \(latitude), \"\(ParseClient.JSONBodyKeys.Longitude)\": \(longitude)}"
         return jsonBody
     }
     
